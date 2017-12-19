@@ -1,0 +1,70 @@
+Piste-luokan esittely:
+
+#ifndef PISTE_H
+#define PISTE_H
+#include <iostream>
+
+using namespace std;
+
+class Piste
+{
+public:
+    
+    Piste(int a, int b);
+    void tulostaTiedot();
+    Piste& operator++(); //jos halutaan, ett‰ ++-operaattori toimii prefixin‰
+    Piste operator++(int); //jos halutaan, ett‰ ++-operaattori toimii postfixin‰
+
+private:
+    int x;
+    int y;
+};
+
+#endif // PISTE_H
+
+Piste-luokan m‰‰rittely:
+
+#include "piste.h"
+
+Piste::Piste(int a, int b)
+{
+    x = a;
+    y = b;
+}
+
+void Piste::tulostaTiedot()
+{
+    cout << "(" << x << "," << y << ")" << endl;
+}
+
+Piste &Piste::operator++()
+{
+    x++;
+    y++;
+    return *this;
+}
+
+Piste Piste::operator++(int)
+{
+    Piste apu = *this;
+    ++*this;
+    return apu;
+}
+
+Esimerkkiohjelma:
+
+#include <iostream>
+#include <piste.h>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    Piste jokuPiste(2,78);
+    ++jokuPiste;
+    jokuPiste.tulostaTiedot();
+    jokuPiste++;
+    jokuPiste.tulostaTiedot();
+    return 0;
+}
+

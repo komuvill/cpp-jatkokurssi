@@ -1,0 +1,68 @@
+#include <iostream>
+#include <ctime>
+#include <time.h>
+#include <cstdlib>
+#include <windows.h>
+
+
+using namespace std;
+
+void lajittele(int taulu[], int koko){
+    for(int i = 0; i < koko; i++){
+        for(int k = i + 1; k < koko + 1; k++){
+            if(taulu[i] > taulu[k]){
+                int temp = taulu[k];
+                taulu[k] = taulu[i];
+                taulu[i] = temp;
+            }
+        }
+    }
+}
+
+int main(int argc, char *argv[]){
+
+    srand(time(NULL));
+
+    int tauluA[10000];
+    int tauluB[50000];
+    int tauluC[100000];
+    int lajitteluAjat[3];
+    int koko, alku, loppu, kesto;
+
+    for(int i = 0; i < 10000; i++){
+        tauluA[i] = rand();
+    }
+    koko = sizeof(tauluA)/sizeof(tauluA[0]);
+    alku = GetTickCount();
+    lajittele(tauluA,koko);
+    loppu = GetTickCount();
+    kesto = loppu-alku;
+    lajitteluAjat[0] = kesto;
+
+    for(int i = 0; i < 50000; i++){
+        tauluB[i] = rand();
+    }
+    alku = GetTickCount();
+    lajittele(tauluB,koko);
+    loppu = GetTickCount();
+    kesto = loppu-alku;
+    lajitteluAjat[1] = kesto;
+
+    for(int i = 0; i < 100000; i++){
+        tauluC[i] = rand();
+    }
+    alku = GetTickCount();
+    lajittele(tauluC,koko);
+    loppu = GetTickCount();
+    kesto = loppu-alku;
+    lajitteluAjat[2] = kesto;
+
+    cout << "Lajitteluajat: " << endl;
+    for(int i = 0; i < 3; i++){
+        cout << i+1 << ". taulu: " << lajitteluAjat[i] << " millisekuntia." << endl;
+    }
+
+    cin.get();
+    return 0;
+
+}

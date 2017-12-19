@@ -1,0 +1,69 @@
+#include <iostream>
+#include <ctime>
+#include <time.h>
+#include <cstdlib>
+#include <windows.h>
+
+
+using namespace std;
+
+void vaihda(int *a, int *b){
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void shell(int luvut[], int maara){
+    int valimatka, vaihto = 1;
+    valimatka = maara / 2;
+    do{
+        do{
+            vaihto = 0;
+            for(int k = 0; k < (maara - valimatka); k++){
+                if(luvut[k] > luvut[k + valimatka]){
+                    vaihda(&(luvut[k]), &(luvut[k + valimatka]));
+                    vaihto = 1;
+                }
+            }
+        }while(vaihto);
+    }while((valimatka /= 2) > 0);
+}
+
+int main(int argc, char *argv[]){
+
+    srand(time(NULL));
+
+    int tauluA[10000];
+    int tauluB[50000];
+    int lajitteluAjat[2];
+    int koko, alku, loppu, kesto;
+
+    for(int i = 0; i < 10000; i++){
+        tauluA[i] = rand();
+    }
+    koko = sizeof(tauluA)/sizeof(tauluA[0]);
+    alku = GetTickCount();
+    shell(tauluA,koko);
+    loppu = GetTickCount();
+    kesto = loppu-alku;
+    lajitteluAjat[0] = kesto;
+
+    for(int i = 0; i < 50000; i++){
+        tauluB[i] = rand();
+    }
+    alku = GetTickCount();
+    shell(tauluB,koko);
+    loppu = GetTickCount();
+    kesto = loppu-alku;
+    lajitteluAjat[1] = kesto;
+
+    cout << "Lajitteluajat: " << endl;
+    for(int i = 0; i < 2; i++){
+        cout << i+1 << ". taulu: " << lajitteluAjat[i] << " millisekuntia." << endl;
+    }
+
+    cin.get();
+    return 0;
+
+}

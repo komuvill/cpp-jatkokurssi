@@ -1,0 +1,52 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdexcept>
+
+using namespace std;
+
+class TiedostoVirhe : public runtime_error
+
+{
+
+public:
+    TiedostoVirhe(const char* huomautus):runtime_error(huomautus){
+
+    }
+};
+
+void tiedostonLukeminen(ifstream &tied, string kahva){
+
+    tied.open(kahva, ios::out);
+    string sisalto;
+
+    //Ei varsinaisesti tarkasta onko tiedostoa olemassa,
+    //mutta jos se ei ole auki voidaan p‰‰tell‰, ett‰ jokin virhe avauksessa on tapahtunut.
+
+    if(tied.is_open()){
+        while(getline(tied,sisalto)){
+            cout << sisalto << endl;
+        }
+    }else{
+        throw TiedostoVirhe("Tiedoston avaus ei onnistunut!");
+    }
+    tied.close();
+}
+
+int main(int argc, char *argv[])
+{
+    ifstream tiedosto;
+    string tiedostoKahva;
+    cout << "Anna avattavan tiedoston nimi: " << endl;
+    cin >> tiedostoKahva;
+
+
+    try{
+        tiedostonLukeminen(tiedosto, tiedostoKahva);
+    }catch(TiedostoVirhe t){
+        cout << t.what() << endl;
+    }
+
+    tiedosto.close();
+    return 0;
+}

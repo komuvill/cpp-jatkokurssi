@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+template<class T>
+
+void pienin(T &param1, T &param2, T &param3){
+    if(param1 < param2 && param1 < param3){
+        cout << param1 << " on pienin" << endl;
+    }else if(param2 < param1 && param2 < param3){
+        cout << param2 << " on pienin" << endl;
+    }else if(param3 < param1 && param3 << param1){
+        cout << param3 << " on pienin" << endl;
+    }else{
+        cout << "Joukossa oli kaksi samansuuruista merkkiä tai lukua" << endl;
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    int valinta = 0;
+    int valintaLippu = 0;
+
+    while(valintaLippu == 0){
+    cout << "Haluatko syöttää (1) Kokonaislukuja vai (2) merkkejä?\n";
+    cin >> valinta;
+        if (valinta == 1){
+            valintaLippu++;
+            int luku1, luku2, luku3;
+            cout << "Syötä 1. luku:" << endl;
+            cin >> luku1;
+            cout << "Syötä 2. luku:" << endl;
+            cin >> luku2;
+            cout << "Syötä 3. luku:" << endl;
+            cin >> luku3;
+            pienin(luku1,luku2,luku3);
+        }else if(valinta == 2){
+            valintaLippu++;
+            char merkki1, merkki2, merkki3;
+            cout << "Syötä 1. merkki:" << endl;
+            cin >> merkki1;
+            cout << "Syötä 2. merkki:" << endl;
+            cin >> merkki2;
+            cout << "Syötä 3. merkki:" << endl;
+            cin >> merkki3;
+            pienin(merkki1,merkki2,merkki3);
+        }else{
+            cout << "Valinta ei kelpaa" << endl;
+        }
+    }
+}

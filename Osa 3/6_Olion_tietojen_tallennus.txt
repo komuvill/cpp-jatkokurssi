@@ -1,0 +1,49 @@
+Luokan esittely:
+
+#ifndef HENKILO_H
+#define HENKILO_H
+
+#include <fstream>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Henkilo
+{
+public:
+
+    Henkilo(string n, int i){
+      nimi = n;
+      ika = i;
+    }
+
+    // Ylim‰‰ritell‰‰n <<-operaattori, jotta olion tiedot voidaan lukea tiedostoon.
+    friend std::ostream& operator<<(ostream& os, const Henkilo& s)
+    {
+        os << "Henkilˆn nimi: " << s.nimi << endl;
+        os << "Henkilˆn ik‰: " << s.ika << endl;
+        return os;
+    }
+
+private:
+    int ika;
+    string nimi;
+};
+
+#endif // HENKILO_H
+
+Esimerkkiohjelma:
+
+#include "henkilo.h"
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+        Henkilo esim("Erkki Esimerkki", 30);
+        ofstream tiedosto("kohde.txt", ios::out);
+        tiedosto << esim; //ylim‰‰ritellyll‰ operaattorilla tallennetaan olion tiedot kohde.txt-tiedostoon
+        tiedosto.close();
+        return 0;
+}

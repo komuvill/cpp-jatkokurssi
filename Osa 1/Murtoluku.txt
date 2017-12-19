@@ -1,0 +1,108 @@
+Murtoluku-luokan esittely:
+
+#ifndef MURTOLUKU_H
+#define MURTOLUKU_H
+#include <iostream>
+
+using namespace std;
+
+
+class Murtoluku
+{
+public:
+    Murtoluku();
+    Murtoluku(int a, int b);
+    int palautaJakaja();
+    int palautaJaettava();
+
+    Murtoluku operator/(Murtoluku& c1);
+    Murtoluku operator+(Murtoluku& c1);
+    Murtoluku operator-(Murtoluku& c1);
+    Murtoluku operator*(Murtoluku& c1);
+
+private:
+    int jakaja;
+    int jaettava;
+};
+
+#endif // MURTOLUKU_H
+
+Murtoluku-luokan toteutus:
+
+#include <murtoluku.h>
+
+Murtoluku::Murtoluku()
+{
+
+}
+
+Murtoluku::Murtoluku(int a, int b)
+{
+    jakaja = b;
+    jaettava = a;
+}
+
+int Murtoluku::palautaJakaja()
+{
+    return jakaja;
+}
+
+int Murtoluku::palautaJaettava()
+{
+    return jaettava;
+}
+
+Murtoluku Murtoluku::operator/(Murtoluku &c1)
+{
+    Murtoluku tulos;
+    tulos.jakaja = c1.jaettava * jakaja;
+    tulos.jaettava = jaettava * c1.jakaja;
+    return tulos;
+}
+
+Murtoluku Murtoluku::operator+(Murtoluku &c1)
+{
+    Murtoluku tulos;
+    tulos.jakaja = c1.jakaja * jakaja;
+    tulos.jaettava = c1.jaettava * jakaja + c1.jakaja * jaettava;
+    return tulos;
+}
+
+Murtoluku Murtoluku::operator-(Murtoluku &c1)
+{
+    Murtoluku tulos;
+    tulos.jakaja = c1.jakaja * jakaja;
+    tulos.jaettava = c1.jakaja * jaettava - c1.jaettava * jakaja;
+    return tulos;
+}
+
+Murtoluku Murtoluku::operator*(Murtoluku &c1)
+{
+    Murtoluku tulos;
+    tulos.jakaja = c1.jakaja * jakaja;
+    tulos.jaettava = c1.jaettava * jaettava;
+    return tulos;
+}
+
+Esimerkkiohjelma:
+
+#include <iostream>
+#include <murtoluku.h>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    Murtoluku luku1(1,3);
+    Murtoluku luku2(1,4);
+    Murtoluku luku3;
+    luku3 = luku1 + luku2;
+    cout << luku3.palautaJaettava() << "/" << luku3.palautaJakaja() << endl;
+    luku3 = luku1 - luku2;
+    cout << luku3.palautaJaettava() << "/" << luku3.palautaJakaja() << endl;
+    luku3 = luku1 * luku2;
+    cout << luku3.palautaJaettava() << "/" << luku3.palautaJakaja() << endl;
+    luku3 = luku1 / luku2;
+    cout << luku3.palautaJaettava() << "/" << luku3.palautaJakaja() << endl;
+    return 0;
+}

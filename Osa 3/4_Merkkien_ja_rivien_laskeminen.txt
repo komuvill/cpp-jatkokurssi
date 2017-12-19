@@ -1,0 +1,31 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+
+    ifstream tiedosto;
+    int rivilaskuri = 0;
+    int merkkilaskuri = 0;
+    tiedosto.open("eka.txt", ios::out);
+
+    if(tiedosto.is_open()){
+        while(tiedosto.get(c)){
+            merkkilaskuri++;
+            if(c == '\n'){
+                rivilaskuri++;
+            }
+        }
+
+        cout << "Tiedostossa oli " << merkkilaskuri << " merkkiä ja " << rivilaskuri << " riviä." << endl;
+
+    }else{
+        cout << "Tiedoston avaus ei onnnistunut." << endl;
+    }
+
+    tiedosto.close();
+    return 0;
+}

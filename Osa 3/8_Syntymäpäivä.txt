@@ -1,0 +1,66 @@
+#include <iostream>
+#include <ctime>
+#include <fstream>
+
+using namespace std;
+
+int main ()
+{
+  time_t aika;
+  struct tm *aikatieto;
+  char puskuri[80];
+
+  time (&aika);
+  aikatieto = localtime(&aika);
+
+  strftime(puskuri,sizeof(puskuri),"%d-%m",aikatieto);
+  string syntymapaiva(puskuri);
+
+  //yll‰ tallennetaan p‰iv‰m‰‰r‰ muodossa PP-KK tekstimuuttujaan
+
+  ifstream tiedosto;
+  int rivimaara = 0;
+  char c;
+  tiedosto.open("nimet.txt", ios::out);
+
+  if(tiedosto.is_open()){
+      while(tiedosto.get(c)){
+          if(c == '\n'){
+              rivimaara++;
+          }
+      }
+
+      tiedosto.clear();
+      tiedosto.seekg(0, ios::beg); //palautetaan tiedosto-osoitin tiedoston alkuun
+      string nimitaulu[rivimaara];
+
+      for(int i = 0; i < rivimaara; i++){
+          getline(tiedosto,nimitaulu[i],'\n');
+      }
+
+      /*
+       * Yll‰ tallennetaan tiedoston jokainen rivi taulukkoon. Tiedoston rakenteen t‰ytyy olla seuraavanlainen,
+       * jotta ohjelma toimii oikein:
+       * Tiedoston riveill‰ vuorottelevat ensin nimi ja sitten syntym‰p‰iv‰ muodossa PP-KK-VVVV.
+       * N‰in taulukon joka toiseen alkioon tallentuu nimi, ja joka toiseen syntym‰p‰iv‰.
+       */
+
+      for(int i = 0; i < rivimaara; i++){
+          if(i != 0 && i % 2 > 0){
+              nimitaulu[i] = nimitaulu[i].substr(0,5); //j‰tet‰‰n kaikista syntym‰p‰ivist‰ vuosiluku pois
+          }
+      }
+
+      for(int i = 0; i < rivimaara; i++){
+          if(nimitaulu[i] == syntymapaiva){
+              cout << "Henkilˆll‰ " << nimitaulu[i-1] << " on t‰n‰‰n syntym‰p‰iv‰." << endl;
+          }
+      }
+
+  }else{
+      cout << "Tiedoston avaus ei onnistunut." << endl;
+  }
+
+  tiedosto.close();
+  return 0;
+}

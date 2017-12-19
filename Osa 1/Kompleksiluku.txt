@@ -1,0 +1,85 @@
+Kompleksiluku-luokan esittely:
+
+#ifndef KOMPLEKSILUKU_H
+#define KOMPLEKSILUKU_H
+#include <iostream>
+
+using namespace std;
+
+
+class Kompleksiluku
+{
+public:
+    Kompleksiluku();
+    Kompleksiluku(int reaaliosa, int imaginaariosa);
+    Kompleksiluku operator+(Kompleksiluku c1);
+    Kompleksiluku operator*(Kompleksiluku c1);
+    void naytaLuku();
+private:
+    int reaali;
+    int imaginaari;
+};
+
+#endif // KOMPLEKSILUKU_H
+
+Luokan m‰‰rittely:
+
+#include "kompleksiluku.h"
+
+Kompleksiluku::Kompleksiluku()
+{
+
+}
+
+Kompleksiluku::Kompleksiluku(int reaaliosa, int imaginaariosa)
+{
+    reaali = reaaliosa;
+    imaginaari = imaginaariosa;
+}
+
+Kompleksiluku Kompleksiluku::operator+(Kompleksiluku c1)
+{
+    Kompleksiluku tulos;
+    tulos.reaali=reaali+c1.reaali;
+    tulos.imaginaari=imaginaari+c1.imaginaari;
+    return tulos;
+}
+
+Kompleksiluku Kompleksiluku::operator*(Kompleksiluku c1)
+{
+    Kompleksiluku tulos;
+    tulos.reaali=(reaali*c1.reaali)-(imaginaari*c1.imaginaari);
+    tulos.imaginaari=(reaali*c1.imaginaari)+(imaginaari*c1.reaali);
+    return tulos;
+}
+
+void Kompleksiluku::naytaLuku()
+{
+        cout << "Kompleksiluvun reaaliosa on " << reaali << " ja imaginaariosa " << imaginaari << "." << endl;
+    if(imaginaari > 0){
+    cout << "Eli: " << reaali <<"+"<<imaginaari<<"i"<<endl;
+    }else{
+        cout << "Eli: " << reaali << imaginaari<<"i"<<endl;
+    }
+}
+
+
+Toiminnallisuuden testaus main.cpp:ss‰:
+
+#include <iostream>
+#include <kompleksiluku.h>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    Kompleksiluku luku1(1,-3);
+    Kompleksiluku luku2(2,5);
+    luku1.naytaLuku();
+    luku2.naytaLuku();
+    Kompleksiluku luku3 = luku1 * luku2;
+    luku3.naytaLuku();
+    luku3 = luku1 + luku2;
+    luku3.naytaLuku();
+    return 0;
+}

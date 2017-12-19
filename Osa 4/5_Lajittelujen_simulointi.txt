@@ -1,0 +1,62 @@
+#include <iostream>
+
+using namespace std;
+
+void lajittele(int taulu[], int koko){
+    for(int i = 0; i < koko; i++){
+        for(int k = i + 1; k < koko + 1; k++){
+            if(taulu[i] > taulu[k]){
+                int temp = taulu[k];
+                taulu[k] = taulu[i];
+                taulu[i] = temp;
+            }
+        }
+        cout << "Lajittelun " << i+1 << ". kierroksella tilanne on tämä: " << endl;
+        for(int j = 0; j < koko; j++){
+            cout << taulu[j] << endl;
+        }
+    }
+}
+
+void vaihda(int *a, int *b){
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void shell(int luvut[], int maara){
+    int valimatka, vaihto = 1, kierroslaskuri;
+    valimatka = maara / 2;
+    do{
+        do{
+            vaihto = 0;
+
+            for(int k = 0; k < (maara - valimatka); k++){
+                kierroslaskuri++;
+                if(luvut[k] > luvut[k + valimatka]){
+                    vaihda(&(luvut[k]), &(luvut[k + valimatka]));
+                    vaihto = 1;
+                    cout << "Lajittelun " << kierroslaskuri << ". kierroksella tapahtui vaihto. Nyt taulukko näyttää tältä: " << endl;
+                    for(int i = 0; i < maara; i++){
+                        cout << luvut[i] << endl;
+                    }
+                }
+            }
+        }while(vaihto);
+    }while((valimatka /= 2) > 0);
+}
+
+int main(int argc, char *argv[]){
+
+    int koko;
+    int vaihtoTaulu[6] = {345, 458, 59, 1121, 56, 1223};
+    koko = sizeof(vaihtoTaulu)/sizeof(vaihtoTaulu[0]);
+    lajittele(vaihtoTaulu,koko);
+    int shellTaulu[6] = {64, 32, 5, 2223, 56, 12389};
+    koko = sizeof(shellTaulu)/sizeof(shellTaulu[0]);
+    shell(shellTaulu,koko);
+    cin.get();
+    return 0;
+
+}

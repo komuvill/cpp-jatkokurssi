@@ -1,0 +1,49 @@
+#include <iostream>
+
+using namespace std;
+
+template<class T>
+
+void vaihtelu(T &param1, T &param2){
+
+if(param1 > param2){
+    cout << "Vaihteluväli on " << param1 - param2 << endl;
+}else{
+    cout << "Vaihteluväli on " << param2 - param1 << endl;
+	}
+}
+
+int main(int argc, char *argv[])
+{
+    
+    int valinta = 0;
+    int valintaLippu = 0;
+
+    while(valintaLippu == 0){
+    cout << "Haluatko syöttää (1) Kokonaislukuja vai (2) liukulukuja?\n";
+    cin >> valinta;
+        if (valinta == 1){
+            valintaLippu++;
+            int suurin = 0;
+            int pienin = 0;
+            cout << "Syötä sarjan suurin arvo:" << endl;
+            cin >> suurin;
+            cout << "Syötä sarjan pienin arvo:" << endl;
+            cin >> pienin;
+            vaihtelu(suurin, pienin);
+
+        }else if(valinta == 2){
+            valintaLippu++;
+            float suurin = 0;
+            float pienin = 0;
+            cout << "Syötä sarjan suurin arvo:" << endl;
+            cin >> suurin;
+            cout << "Syötä sarjan pienin arvo:" << endl;
+            cin >> pienin;
+            vaihtelu(suurin, pienin);
+
+        }else{
+            cout << "Valinta ei kelpaa." << endl;
+        }
+    }
+}

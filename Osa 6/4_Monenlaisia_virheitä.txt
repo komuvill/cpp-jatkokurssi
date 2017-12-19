@@ -1,0 +1,81 @@
+virhe-luokan esittely ja toteutus:
+
+#ifndef VIRHE_H
+#define VIRHE_H
+#include <iostream>
+#include <stdexcept>
+
+using namespace std;
+
+class virhe : public runtime_error
+{
+public:
+    virhe(const char* huomautus, int k):runtime_error(huomautus), koodi(k)
+{
+
+}
+
+int koodi;
+
+};
+
+#endif // VIRHE_H
+
+varsinainen ohjelma:
+
+#include <iostream>
+#include <stdio.h>
+#include <string>
+#include "virhe.h"
+#include <ctype.h>
+
+using namespace std;
+
+void virheenLuonti(int vika){
+    throw virhe("Virhe!",vika);
+}
+
+int main(int argc, char *argv[])
+{
+    string virheTaulu[3][2];
+    virheTaulu[0][0] = "Syötettiin numero.";
+    virheTaulu[0][1] = "Syötä numeron sijasta iso kirjain.";
+    virheTaulu[1][0] = "Syötettiin pieni kirjain.";
+    virheTaulu[1][1] = "Syötä pienen kirjaimen sijasta iso kirjain.";
+    virheTaulu[2][0] = "Syötettiin muu merkki.";
+    virheTaulu[2][1] = "Syötä iso kirjain.";
+    char kirjain;
+    int vikakoodi;
+    bool silmukka = true;
+
+    while(silmukka){
+        try{
+            cout << "Syötä kirjain:" << endl;
+            cin >> kirjain;
+            if(isupper(kirjain)){
+                cout << "Syötettiin iso kirjain." << endl;
+                silmukka = false;
+            }else if(isdigit(kirjain)){
+                vikakoodi = 10;
+                virheenLuonti(vikakoodi);
+            }else if(islower(kirjain)){
+                vikakoodi = 20;
+                virheenLuonti(vikakoodi);
+            }else{
+                vikakoodi = 30;
+                virheenLuonti(vikakoodi);
+            }
+        }catch(const virhe &v){
+            if(v.koodi == 10){
+                cout << virheTaulu[0][0] << endl;
+                cout << virheTaulu[0][1] << endl;
+            }else if(v.koodi == 20){
+                cout << virheTaulu[1][0] << endl;
+                cout << virheTaulu[1][1] << endl;
+            }else{
+                cout << virheTaulu[2][0] << endl;
+                cout << virheTaulu[2][1] << endl;
+            }
+        }
+    }
+}

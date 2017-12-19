@@ -1,0 +1,41 @@
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//Lajittelussa k‰ytet‰‰n valintalajittelua
+
+vector<string> nimilajittelu(vector<string> taulukko){
+    int pienin = 0;
+
+    for(int i = 0; i < (int)taulukko.size(); i++){
+        pienin = i;
+        for(int j = i; j < (int)taulukko.size(); j++){
+            if(taulukko[j].compare(taulukko[pienin]) < 0){
+                pienin = j;
+            }
+        }
+        if(pienin != i){
+            swap(taulukko[i],taulukko[pienin]);
+        }
+    }
+    return taulukko;
+}
+
+int main(int argc, char *argv[]){
+
+    vector<string> nimet = {"Suvi", "Salomon", "Ensio", "Seppo", "Immi", "Esko", "Raili", "Pihla", "Moona", "P‰ivi"};
+    cout << "Ennen lajittelua: " << endl;
+    for(int i = 0; i < (int)nimet.size(); i++){
+        cout << nimet[i] << endl;
+    }
+
+    nimet = nimilajittelu(nimet);
+
+    cout << "Lajittelun j‰lkeen: " << endl;
+    for(int i = 0; i < (int)nimet.size(); i++){
+        cout << nimet[i] << endl;
+    }
+
+}

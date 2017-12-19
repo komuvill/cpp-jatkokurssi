@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <random>
+
+using namespace std;
+
+void decrypt(ifstream &is, int key){
+
+    string viesti;
+    int count, length;
+    getline(is,viesti);
+    length = (int)viesti.length();
+    cout << "Decrypting message: " << viesti << endl;
+    for(count = 0; count < length; count++){
+        if(isalpha(viesti[count])){
+            for(int i = 0; i < key; i++){
+                if(viesti[count] == 'a'){
+                    viesti[count] = 'z';
+                }else{
+                    viesti[count]--;
+                }
+            }
+        }
+    }
+
+    cout << "Message decrypted: " << viesti << endl;
+}
+
+int main(int argc, char *argv[])
+{
+    random_device arpoja;
+    mt19937 rng(arpoja());
+    uniform_int_distribution<int> uni(1,26);
+    auto avain = uni(rng);
+    //luotiin salausavain v‰lill‰ 1-26
+
+    string input;
+    int count = 0, length;
+
+    //Salattava teksti saa sis‰lt‰‰ vain merkkej‰ a-z
+    cout << "Please enter the message to be encrypted: " << endl;
+    getline(cin,input);
+
+    length = (int)input.length();
+
+    //salauksessa k‰ytet‰‰n Caesar-salausta eli jokaisen merkin arvoa "kasvatetaan" salausavaimen verran
+
+    for(count = 0; count < length; count++){
+        if(isalpha(input[count])){
+            input[count] = tolower(input[count]);
+            for(int i = 0; i < avain; i++){
+                if(input[count] == 'z'){
+                    input[count] = 'a';
+                }else{
+                    input[count]++;
+                }
+            }
+        }
+    }
+
+    ofstream file("viesti.txt");
+    file << input;
+    file.close();
+    ifstream message("viesti.txt", ios::out);
+    decrypt(message,avain);
+    message.close();
+
+}

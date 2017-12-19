@@ -1,0 +1,57 @@
+/*
+ * Seuraavassa ohjelmassa käytetään hyväksi C++-standardikirjaston säieominaisuuksia
+ * ajan näyttämiseen näytöllä ja sen kirjoittamiseksi tiedostoon.
+ * Säikeiden viiveitä on säädetty siten, että tiedostoon kirjoittaminen
+ * saadaan valmiiksi aikaisemmin. Tällöin huomataan myös, kuinka ohjelma suorittaa kirjoittamista
+ * tiheämmällä tahdilla, entä ajan näyttämistä
+ */
+
+#include <iostream>
+#include <thread>
+#include <time.h>
+#include <fstream>
+#include <chrono>
+
+using namespace std;
+
+void naytolle(){
+    time_t aika;
+    char puskuri[10];
+    struct tm *aikaNyt;
+    for(int i = 0; i < 10; i++){
+        time(&aika);
+        aikaNyt = localtime(&aika);
+        strftime(puskuri,10,"%H:%M:%S",aikaNyt);
+        cout << puskuri << endl;
+        this_thread::sleep_for(chrono::milliseconds(2000));
+    }
+    cout << "Säie, jossa tulostettiin aikaa näytölle, päättyi" << endl;
+}
+
+void tiedostoon(){
+    ofstream os("kohde.txt", ios::out);
+    time_t aika;
+    char puskuri[10];
+    struct tm *aikaNyt;
+    for(int i = 0; i < 10; i++){
+        time(&aika);
+        aikaNyt = localtime(&aika);
+        strftime(puskuri,10,"%H:%M:%S",aikaNyt);
+        os << puskuri << endl;
+        this_thread::sleep_for(chrono::milliseconds(1000));
+        cout << "Kirjoitettiin tiedostoon" << endl;
+    }
+    cout << "Säie, jossa kirjoitettiin aikaa tiedostoon, päättyi" << endl;
+}
+
+int main ()
+{
+
+  thread naytto(naytolle);
+  thread filu(tiedostoon);
+
+  naytto.join();
+  filu.join();
+
+  return 0;
+}

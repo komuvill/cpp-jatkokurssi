@@ -1,0 +1,88 @@
+#include <iostream>
+#include <ctime>
+#include <algorithm>
+#include <time.h>
+#include <cstdlib>
+#include <windows.h>
+
+
+using namespace std;
+
+int binaarihaku(int t[], int koko, int haettava){
+    int keskialkio;
+    int jako;
+    int eka = 0;
+    int vika = koko - 1;
+    do{
+        jako = (vika + eka) / 2;
+        keskialkio = t[jako];
+        if(haettava < keskialkio){
+            vika = jako-1;
+        }else{
+            eka = jako + 1;
+        }
+    }while(!(haettava == keskialkio || eka > vika));
+    return (haettava == keskialkio) ? jako : -1;
+}
+
+int main(int argc, char *argv[]){
+
+    /*
+     * Hakuaikojen laskennassa käytetään windows.h-kirjaston GetTickCount()-funktiota. 
+     * Tällä funktiolla saadaan tarkempia tuloksia, sillä se palauttaa järjestelmän käynnissäoloajan millisekunteina.
+     * Omalla koneellani haku molemmista taulukoista tapahtui kuitenkin niin nopeasti, että molempien ajastuksien
+     * tulokseksi tuli 0 millisekuntia. Testasin ajanottometodin toimivuuden pitämällä ohjelmaa odottamassa
+     * syötettä.
+     */
+    
+    srand(time(NULL));
+
+    int pikkutaulu[10000];
+    int isotaulu[50000];
+    int haettava, koko, haunTulos, alku, loppu, kesto;
+
+    for(int i = 0; i < 10000; i++){
+        pikkutaulu[i] = rand();
+    }
+    for(int i = 0; i < 50000; i++){
+        isotaulu[i] = rand();
+    }
+
+    cout << "Haku pienemmästä taulusta" << endl;
+    koko = sizeof(pikkutaulu)/sizeof(pikkutaulu[0]);
+    sort(pikkutaulu, pikkutaulu + koko);
+    cout << "Syötä etsittävä luku: " << endl;
+    cin >> haettava;
+    alku = GetTickCount();
+    haunTulos = binaarihaku(pikkutaulu,koko,haettava);
+    loppu = GetTickCount();
+    kesto = loppu - alku;
+    if( haunTulos > -1 ){
+        cout << "Haettava arvo löytyi kohdasta " << haunTulos << endl;
+    }else{
+        cout << "Arvoa ei löytynyt" << endl;
+    }
+
+    cout << "Haussa kesti " << kesto << " millisekuntia" << endl;
+
+    cout << "Haku suuremmasta taulusta" << endl;
+    koko = sizeof(isotaulu)/sizeof(isotaulu[0]);
+    sort(isotaulu, isotaulu + koko);
+    cout << "Syötä etsittävä luku: " << endl;
+    cin >> haettava;
+    alku = GetTickCount();
+    haunTulos = binaarihaku(isotaulu,koko,haettava);
+    loppu = GetTickCount();
+    kesto = loppu - alku;
+    if( haunTulos > -1 ){
+        cout << "Haettava arvo löytyi kohdasta " << haunTulos << endl;
+    }else{
+        cout << "Arvoa ei löytynyt" << endl;
+    }
+
+    cout << "Haussa kesti " << kesto << " millisekuntia" << endl;
+    
+    cin.get();
+    return 0;
+
+}

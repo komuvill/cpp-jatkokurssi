@@ -1,0 +1,44 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+int lineaarihaku(int t[], int koko, int haettava){
+
+    for(int i = 0; i < koko + 1; i++){
+        if(t[i] == haettava){
+            return i;
+        }
+    }
+    return 999;
+}
+
+int main(int argc, char *argv[]){
+
+    srand(time(NULL));
+
+    int taulukko[50];
+    int haettava;
+    int taulukonKoko;
+    int haunTulos;
+
+    for(int i = 0; i < 50; i++){
+        taulukko[i] = rand();
+    }
+
+    taulukonKoko = sizeof(taulukko)/sizeof(taulukko[0]);
+
+    cout << "Syötä etsittävä luku: " << endl;
+    cin >> haettava;
+
+    haunTulos = lineaarihaku(taulukko, taulukonKoko, haettava);
+
+    if(haunTulos != 999){
+        cout << "Löytyi kohdasta " << haunTulos << endl;
+    }else{
+        cout << "Arvoa ei ole" << endl;
+    }
+    cin.get();
+    return 0;
+}

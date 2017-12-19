@@ -1,0 +1,22 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+
+    ofstream tiedosto("kohde.txt", ios::out);
+    string rivi;
+
+    cout << "Kirjoita tallennettava teksti, \"lopeta\" lopettaa." << endl;
+    while(rivi != "lopeta"){
+        cin >> rivi;
+        if(rivi != "lopeta"){
+            tiedosto << rivi << endl;
+           }
+    }
+    tiedosto.close();
+    return 0;
+}

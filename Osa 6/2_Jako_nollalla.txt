@@ -1,0 +1,33 @@
+#include <iostream>
+#include <stdexcept>
+#include <iomanip>
+
+using namespace std;
+
+double jakolasku(int jaettava, int jakaja){
+    if(jakaja == 0){
+    throw overflow_error("Jako nollalla!");
+    }else{
+        return (double)jaettava/(double)jakaja;
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    int jaettava, jakaja;
+    double tulos;
+    bool silmukka = true;
+    while(silmukka){
+        cout << "Syötä jaettava luku:" << endl;
+        cin >> jaettava;
+        cout << "Syötä jakaja:" << endl;
+        cin >> jakaja;
+        try{
+            tulos = jakolasku(jaettava,jakaja);
+            cout << "Jakolaskun tulos: " << setprecision(3) << tulos << endl;
+        }catch(const exception &e){
+            cout << e.what() << endl;
+            silmukka = false;
+        }
+    }
+}

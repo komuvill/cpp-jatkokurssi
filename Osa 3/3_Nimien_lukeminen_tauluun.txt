@@ -1,0 +1,36 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+
+    ifstream tiedosto;
+    string rivi;
+    int rivimaara = 0;
+    char c;
+    tiedosto.open("nimet.txt", ios::out);
+
+    if(tiedosto.is_open()){
+        while(tiedosto.get(c)){
+            if(c == '\n'){
+                rivimaara++;
+            }
+        }
+
+        tiedosto.clear();
+        tiedosto.seekg(0, ios::beg); //palautetaan tiedosto-osoitin tiedoston alkuun
+        string nimitaulu[rivimaara];
+
+        for(int i = 0; i < rivimaara; i++){
+            tiedosto >> nimitaulu[i];
+        }
+    }else{
+        cout << "Tiedoston avaus ei onnistunut." << endl;
+    }
+
+    tiedosto.close();
+    return 0;
+}

@@ -1,0 +1,93 @@
+Luokan esittely:
+
+#ifndef HENKILO_H
+#define HENKILO_H
+
+#include <fstream>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Henkilo
+{
+public:
+
+    Henkilo(string n, int i);
+    Henkilo();
+    void asetaNimi(string n);
+    void asetaIka(int i);
+
+    // Ylim‰‰ritell‰‰n <<-operaattori, jotta olion tiedot voidaan lukea tiedostoon.
+    friend std::ostream& operator<<(ostream& os, const Henkilo& s)
+    {
+        os << "Henkilˆn nimi: " << s.nimi << endl;
+        os << "Henkilˆn ik‰: " << s.ika << endl;
+        return os;
+    }
+
+private:
+    int ika;
+    string nimi;
+};
+
+#endif // HENKILO_H
+
+Luokan m‰‰rittely:
+
+#include "henkilo.h"
+
+Henkilo::Henkilo(string n, int i){
+    nimi = n;
+    ika = i;
+}
+
+Henkilo::Henkilo()
+{
+
+}
+
+void Henkilo::asetaNimi(string n)
+{
+    nimi = n;
+}
+
+void Henkilo::asetaIka(int i)
+{
+    ika = i;
+}
+
+void Henkilo::naytaTiedot()
+{
+    cout << "Nimi: " << nimi << endl;
+    cout << "Ik‰: " << ika << endl;
+}
+
+Esimerkkiohjelma:
+
+#include "henkilo.h"
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+        Henkilo henkiloTaulu[3];
+
+        for(unsigned int i = 0; i < sizeof(henkiloTaulu) / sizeof(henkiloTaulu[0]); i++){
+            string nimi;
+            int ika;
+            cout << "Anna nimi: " << endl;
+            cin >> nimi;
+            cout << "Anna ik‰: " << endl;
+            cin >> ika;
+            henkiloTaulu[i].asetaNimi(nimi);
+            henkiloTaulu[i].asetaIka(ika);
+        }
+
+        ofstream tiedosto("nimitaulukko.txt", ios::out);
+        for(unsigned int i = 0; i < sizeof(henkiloTaulu) / sizeof(henkiloTaulu[0]); i++){
+            tiedosto << henkiloTaulu[i];
+        }
+        tiedosto.close();
+        return 0;
+}

@@ -1,0 +1,27 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    ifstream tiedosto;
+    ofstream kohdetiedosto("eka.bak");
+    string rivi;
+    tiedosto.open("eka.txt", ios::out);
+
+    //varmistetaan, että tiedoston avaus onnistui ennen kuin sitä luetaan
+
+    if(tiedosto.is_open()){
+        while(getline(tiedosto,rivi)){
+            cout << rivi << endl;
+            kohdetiedosto << rivi << endl;
+        }
+    }else{
+        cout << "Tiedoston avaus ei onnistunut." << endl;
+    }
+    tiedosto.close();
+    kohdetiedosto.close();
+    return 0;
+}

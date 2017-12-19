@@ -1,0 +1,26 @@
+#include <iostream>
+#include <stdio.h>
+#include <ctype.h>
+#include <stdexcept>
+
+using namespace std;
+
+void virhe(){
+    throw runtime_error("Ei ollut iso kirjain");
+}
+
+int main(int argc, char *argv[])
+{
+    char kirjain;
+    try{
+        cout << "Syötä kirjain:" << endl;
+        cin >> kirjain;
+        if(isupper(kirjain)){
+            cout << "Oli iso kirjain." << endl;
+        }else{
+            virhe();
+        }
+    }catch(const exception &e){
+        cout << e.what() << endl;
+    }
+}
